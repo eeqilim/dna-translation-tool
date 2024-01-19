@@ -35,3 +35,6 @@ This is a Python Flask project that translates DNA sequences into mRNA and event
 
 ## Demo
 
+![Screenshot 2024-01-18 at 10 09 18 PM](https://github.com/eeqilim/dna-translation-tool/assets/143212045/1e08303b-7abb-4dd7-ba52-88ec3fe4f219)
+
+![Screenshot 2024-01-18 at 10 09 02 PM](https://github.com/eeqilim/dna-translation-tool/assets/143212045/5e26d87e-c6be-48c4-87f6-c144326f512b)
