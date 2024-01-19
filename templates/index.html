@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DNA Translation Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 30px;
+        }
+
+        form {
+            margin: 30px auto;
+            width: 60%;
+            display: flex;
+            flex-wrap: wrap;
+            /* Set flex-wrap property to wrap */
+            align-items: center;
+            justify-content: center;
+            /* Center the form elements horizontally */
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 16px 32px;
+            color: white;
+            font-size: 16px;
+            border: 4px solid white;
+            cursor: pointer;
+            display: inline-block;
+            /* Make the buttons appear next to each other */
+        }
+
+        #output {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>DNA to mRNA to Protein</h1>
+    <form id="dnaForm">
+        <label for="DNAseq">Enter DNA sequence (5' to 3'):</label>
+        <input type="text" id="DNAseq" name="DNAseq" required>
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+    <div id="resultDiv"></div>
+
+    <script>
+        // JavaScript code to handle form submission
+        document.getElementById("dnaForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+            const formData = new FormData(event.target); // Get form data
+            const dnaSequence = formData.get("DNAseq"); // Get DNA sequence value
+
+            // Send the DNA sequence to the server using AJAX
+            fetch("/process", {
+                method: "POST",
+                body: JSON.stringify({ DNAseq: dnaSequence }), // Convert data to JSON
+                headers: {
+                    "Content-Type": "application/json" // Set content type to JSON
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.hasOwnProperty("error")) {
+                        // Handle the error response
+                        document.getElementById("resultDiv").innerHTML = "<p>" + data.error + "</p>";
+                    } else {
+                        // Handle the successful response
+                        // Update the resultDiv with the response from the server
+                        document.getElementById("resultDiv").innerHTML = `
+                        <strong>DNA sequence (5' to 3'): </strong>${data.DNAseq}<br>
+                        <strong>DNA template strand (3' to 5'): </strong>${data.template_strand}<br>
+                        <strong>mRNA (5' to 3'): </strong>${data.mrna_seq}<br>
+                        <strong>Protein: </strong>${data.protein}<br>
+                        <strong>mRNA sequence from start codon (5' to 3'): </strong>${data.mRNAseq_startcodon}<br>
+                        <strong>Protein (from start codon): </strong>${data.protein_start}<br>
+                    `;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    document.getElementById("resultDiv").innerHTML = "<p>Error processing the DNA sequence.</p>";
+                });
+        });
+
+        // JavaScript code to handle reset button click
+        document.getElementById("dnaForm").addEventListener("reset", function (event) {
+            document.getElementById("DNAseq").value = ""; // Clear the input field
+            document.getElementById("resultDiv").innerHTML = ""; // Clear the result div
+        });
+    </script>
+</body>
+
+</html>
