@@ -1,4 +1,4 @@
-# DNA Translation Tool
+# [DNA Translation Tool](https://dna-translation-tool.onrender.com)
 
 This is a Python Flask project that translates DNA sequences into mRNA and eventually into a protein sequence.
 
