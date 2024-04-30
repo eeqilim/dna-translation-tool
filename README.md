@@ -2,6 +2,7 @@
 
 This is a Python Flask project that translates DNA sequences into mRNA and eventually into a protein sequence.
 
+
 ## Usage
 
 1. Enter the DNA sequence (5' to 3') in the provided input field.
@@ -11,6 +12,18 @@ This is a Python Flask project that translates DNA sequences into mRNA and event
 3. The translated results will be displayed, including the DNA template strand, mRNA sequence, protein sequence, mRNA sequence from the start codon, and the protein sequence from the start codon.
    
 4. Click the "Reset" button to clear the inputs.
+
+
+## Deployment Configuration
+
+1. **Build Command**
+
+   `$ pip install -r requirements.txt`
+
+2. **Start Command**
+  
+   `$ pip install gunicorn Flask==3.0.1 && gunicorn -b 0.0.0.0:$PORT app:app`
+
 
 ## Running the Application Locally
 
@@ -31,7 +44,7 @@ This is a Python Flask project that translates DNA sequences into mRNA and event
 4. **Start the Flask development server:**
    
    `flask run`
-   
+
 
 ## Demo
 
